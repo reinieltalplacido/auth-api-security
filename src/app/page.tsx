@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 font-sans">
-      {/* Logo / Title */}
+      
       <h1 className="text-5xl font-extrabold text-gray-800 dark:text-white mb-4">
         Welcome
       </h1>
@@ -11,7 +11,7 @@ export default function Home() {
         Choose an option to continue
       </p>
 
-      {/* Buttons */}
+    
       <div className="flex gap-6">
         <Link
           href="/login"

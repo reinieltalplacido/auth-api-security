@@ -16,7 +16,7 @@ const handler = NextAuth({
     }),
   ],
   pages: {
-    signIn: "/login", // optional: custom login page
+    signIn: "/login", 
   },
   session: {
     strategy: "jwt",
