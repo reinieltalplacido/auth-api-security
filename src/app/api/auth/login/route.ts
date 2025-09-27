@@ -1,12 +1,15 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import * as jose from "jose";
 
 const prisma = new PrismaClient();
 
-// Use an env secret for signing tokens
-const JWT_SECRET = process.env.JWT_SECRET || "supersecret"; // ⚠️ replace with real env var
+// ✅ Encode secret for jose
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
+if (!process.env.JWT_SECRET) {
+  throw new Error("JWT_SECRET is not defined in environment variables");
+}
 
 export async function POST(req: Request) {
   try {
@@ -19,6 +22,7 @@ export async function POST(req: Request) {
       );
     }
 
+    // Find user by email
     const user = await prisma.user.findUnique({
       where: { email },
     });
@@ -30,6 +34,7 @@ export async function POST(req: Request) {
       );
     }
 
+    // Check password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return NextResponse.json(
@@ -38,18 +43,21 @@ export async function POST(req: Request) {
       );
     }
 
-    // ✅ Generate JWT (expires in 7 days)
-    const token = jwt.sign(
-      { id: user.id, role: user.role, email: user.email },
-      JWT_SECRET,
-      { expiresIn: "7d" }
-    );
+    // ✅ Generate JWT using jose (7 days expiry)
+    const token = await new jose.SignJWT({
+      id: user.id,
+      role: user.role,
+      email: user.email,
+    })
+      .setProtectedHeader({ alg: "HS256" })
+      .setExpirationTime("7d")
+      .sign(JWT_SECRET);
 
-    // ✅ role-based redirect
+    // Role-based redirect
     const redirectUrl =
       user.role === "ADMIN" ? "/admin/dashboard" : "/user/dashboard";
 
-    // ✅ Attach token to cookie
+    // Attach token to cookie
     const response = NextResponse.json({
       message: "Login successful",
       role: user.role,

@@ -1,49 +1,144 @@
+"use client";
+
+import { useState } from "react";
+import {
+  DollarSign,
+  Users,
+  Activity,
+  TrendingUp,
+} from "lucide-react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+
+// Sample data for the graph
+const data = [
+  { date: "Apr 7", visitors: 200 },
+  { date: "Apr 13", visitors: 350 },
+  { date: "Apr 19", visitors: 220 },
+  { date: "Apr 26", visitors: 400 },
+  { date: "May 3", visitors: 300 },
+  { date: "May 10", visitors: 500 },
+  { date: "May 17", visitors: 380 },
+  { date: "May 24", visitors: 450 },
+  { date: "Jun 1", visitors: 420 },
+  { date: "Jun 8", visitors: 600 },
+  { date: "Jun 15", visitors: 550 },
+  { date: "Jun 22", visitors: 700 },
+  { date: "Jun 30", visitors: 650 },
+];
+
 export default function AdminDashboard() {
+  const [filter, setFilter] = useState("3m");
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Admin Dashboard</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Residents Management */}
+      {/* Top Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* Revenue */}
         <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-          <h2 className="text-xl font-semibold mb-2">Residents</h2>
-          <p className="text-gray-600 text-sm mb-4">
-            View and manage resident records.
-          </p>
-          <a
-            href="/admin/residents"
-            className="text-blue-600 font-medium hover:underline"
-          >
-            Manage Residents →
-          </a>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-500 text-sm">Total Revenue</p>
+              <h2 className="text-2xl font-bold text-gray-800">$1,250.00</h2>
+              <p className="text-green-600 text-sm mt-1">+12.5% this month</p>
+            </div>
+            <DollarSign className="w-8 h-8 text-green-500" />
+          </div>
         </div>
 
-        {/* Barangay Officials */}
+        {/* Customers */}
         <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-          <h2 className="text-xl font-semibold mb-2">Officials</h2>
-          <p className="text-gray-600 text-sm mb-4">
-            Update barangay officials and their roles.
-          </p>
-          <a
-            href="/admin/officials"
-            className="text-blue-600 font-medium hover:underline"
-          >
-            Manage Officials →
-          </a>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-500 text-sm">New Customers</p>
+              <h2 className="text-2xl font-bold text-gray-800">1,234</h2>
+              <p className="text-red-600 text-sm mt-1">-20% this period</p>
+            </div>
+            <Users className="w-8 h-8 text-blue-500" />
+          </div>
         </div>
 
-        {/* Requests */}
+        {/* Active Accounts */}
         <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-          <h2 className="text-xl font-semibold mb-2">Requests</h2>
-          <p className="text-gray-600 text-sm mb-4">
-            Approve or reject service requests.
-          </p>
-          <a
-            href="/admin/requests"
-            className="text-blue-600 font-medium hover:underline"
-          >
-            View Requests →
-          </a>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-500 text-sm">Active Accounts</p>
+              <h2 className="text-2xl font-bold text-gray-800">45,678</h2>
+              <p className="text-green-600 text-sm mt-1">+12.5% growth</p>
+            </div>
+            <Activity className="w-8 h-8 text-purple-500" />
+          </div>
+        </div>
+
+        {/* Growth Rate */}
+        <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-500 text-sm">Growth Rate</p>
+              <h2 className="text-2xl font-bold text-gray-800">4.5%</h2>
+              <p className="text-green-600 text-sm mt-1">Steady increase</p>
+            </div>
+            <TrendingUp className="w-8 h-8 text-orange-500" />
+          </div>
+        </div>
+      </div>
+
+      {/* Graph Section */}
+      <div className="bg-white p-6 rounded-xl shadow">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold text-gray-800">Total Visitors</h2>
+          <div className="space-x-2">
+            <button
+              onClick={() => setFilter("3m")}
+              className={`px-3 py-1 rounded-lg text-sm ${
+                filter === "3m"
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-200 text-gray-700"
+              }`}
+            >
+              Last 3 months
+            </button>
+            <button
+              onClick={() => setFilter("30d")}
+              className={`px-3 py-1 rounded-lg text-sm ${
+                filter === "30d"
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-200 text-gray-700"
+              }`}
+            >
+              Last 30 days
+            </button>
+            <button
+              onClick={() => setFilter("7d")}
+              className={`px-3 py-1 rounded-lg text-sm ${
+                filter === "7d"
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-200 text-gray-700"
+              }`}
+            >
+              Last 7 days
+            </button>
+          </div>
+        </div>
+
+        {/* Chart */}
+        <div className="h-80">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={data}>
+              <XAxis dataKey="date" stroke="#6b7280" />
+              <YAxis stroke="#6b7280" />
+              <Tooltip />
+              <Line type="monotone" dataKey="visitors" stroke="#2563eb" strokeWidth={2} />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </div>
     </div>

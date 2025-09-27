@@ -7,4 +7,4 @@ i build this project for testing and practice of api, backend and security.
 
 the frontend is simple, will improve in the future!
 
-more improvements to come!
+more improvements to come!  
