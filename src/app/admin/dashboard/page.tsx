@@ -6,6 +6,10 @@ import {
   Users,
   Activity,
   TrendingUp,
+  UserPlus,
+  FileText,
+  Home,
+  Calendar,
 } from "lucide-react";
 import {
   LineChart,
@@ -58,7 +62,7 @@ export default function AdminDashboard() {
         <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-500 text-sm">New Customers</p>
+              <p className="text-gray-500 text-sm">New Residents</p>
               <h2 className="text-2xl font-bold text-gray-800">1,234</h2>
               <p className="text-red-600 text-sm mt-1">-20% this period</p>
             </div>
@@ -92,9 +96,11 @@ export default function AdminDashboard() {
       </div>
 
       {/* Graph Section */}
-      <div className="bg-white p-6 rounded-xl shadow">
+      <div className="bg-white p-6 rounded-xl shadow mb-8">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-gray-800">Total Visitors</h2>
+          <h2 className="text-xl font-semibold text-gray-800">
+            Total Residents
+          </h2>
           <div className="space-x-2">
             <button
               onClick={() => setFilter("3m")}
@@ -136,9 +142,104 @@ export default function AdminDashboard() {
               <XAxis dataKey="date" stroke="#6b7280" />
               <YAxis stroke="#6b7280" />
               <Tooltip />
-              <Line type="monotone" dataKey="visitors" stroke="#2563eb" strokeWidth={2} />
+              <Line
+                type="monotone"
+                dataKey="visitors"
+                stroke="#2563eb"
+                strokeWidth={2}
+              />
             </LineChart>
           </ResponsiveContainer>
+        </div>
+      </div>
+
+      {/* Quick Actions & Recent Activities */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Quick Actions */}
+        <div className="bg-white p-6 rounded-xl shadow">
+          <h3 className="text-lg font-semibold mb-4 text-gray-800">
+            Quick Actions
+          </h3>
+          <div className="space-y-3">
+            <button className="w-full flex items-center gap-3 p-3 text-left bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+              <UserPlus className="text-blue-500" size={20} />
+              <div>
+                <div className="font-medium">Register Resident</div>
+                <div className="text-xs text-gray-500">Add new resident</div>
+              </div>
+            </button>
+
+            <button className="w-full flex items-center gap-3 p-3 text-left bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+              <FileText className="text-green-500" size={20} />
+              <div>
+                <div className="font-medium">Issue Certificate</div>
+                <div className="text-xs text-gray-500">Generate documents</div>
+              </div>
+            </button>
+
+            <button className="w-full flex items-center gap-3 p-3 text-left bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+              <Home className="text-purple-500" size={20} />
+              <div>
+                <div className="font-medium">Property Records</div>
+                <div className="text-xs text-gray-500">Manage properties</div>
+              </div>
+            </button>
+
+            <button className="w-full flex items-center gap-3 p-3 text-left bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+              <Calendar className="text-orange-500" size={20} />
+              <div>
+                <div className="font-medium">Schedule Events</div>
+                <div className="text-xs text-gray-500">Community events</div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        {/* Recent Activities */}
+        <div className="bg-white p-6 rounded-xl shadow">
+          <h3 className="text-lg font-semibold mb-4 text-gray-800">
+            Recent Activities
+          </h3>
+          <div className="space-y-4">
+            <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              <div className="flex-1">
+                <div className="text-sm font-medium">
+                  New resident registered
+                </div>
+                <div className="text-xs text-gray-500">
+                  Juan Dela Cruz - Purok 3
+                </div>
+              </div>
+              <div className="text-xs text-gray-400">5 min ago</div>
+            </div>
+
+            <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <div className="flex-1">
+                <div className="text-sm font-medium">
+                  Barangay clearance issued
+                </div>
+                <div className="text-xs text-gray-500">
+                  Maria Santos - Certificate #BC-2024-0156
+                </div>
+              </div>
+              <div className="text-xs text-gray-400">12 min ago</div>
+            </div>
+
+            <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+              <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+              <div className="flex-1">
+                <div className="text-sm font-medium">
+                  Community meeting scheduled
+                </div>
+                <div className="text-xs text-gray-500">
+                  Monthly assembly - October 15, 2024
+                </div>
+              </div>
+              <div className="text-xs text-gray-400">1 hour ago</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

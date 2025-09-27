@@ -6,8 +6,11 @@ import {
   FileText,
   Megaphone,
   User,
+  Users,
+  Home,
   LogOut,
 } from "lucide-react";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -34,31 +37,48 @@ export default function AdminLayout({
           <h1 className="text-lg font-bold text-white">Barangay Admin</h1>
         </div>
 
-        {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-2">
-          <Link href="/admin" className={linkClasses("/admin/dashboard")}>
-            <LayoutDashboard className="w-5 h-5" />
-            Dashboard
-          </Link>
+                    {/* Navigation */}
+                    <nav className="flex-1 p-4 space-y-2">
+              {/* Dashboard */}
+              <Link href="/admin/dashboard" className={linkClasses("/admin/dashboard")}>
+                <LayoutDashboard className="w-5 h-5" />
+                Dashboard
+              </Link>
 
-          <Link href="/admin/requests" className={linkClasses("/admin/requests")}>
-            <FileText className="w-5 h-5" />
-            Requests
-          </Link>
+              {/* Announcements */}
+              <Link
+                href="/admin/announcements"
+                className={linkClasses("/admin/announcements")}
+              >
+                <Megaphone className="w-5 h-5" />
+                Announcements
+              </Link>
 
-          <Link
-            href="/admin/announcements"
-            className={linkClasses("/admin/announcements")}
-          >
-            <Megaphone className="w-5 h-5" />
-            Announcements
-          </Link>
+              {/* Requests */}
+              <Link href="/admin/requests" className={linkClasses("/admin/requests")}>
+                <FileText className="w-5 h-5" />
+                Requests
+              </Link>
 
-          <Link href="/admin/profile" className={linkClasses("/admin/profile")}>
-            <User className="w-5 h-5" />
-            Profile
-          </Link>
-        </nav>
+              {/* Residents */}
+              <Link href="/admin/residents" className={linkClasses("/admin/residents")}>
+                <Users className="w-5 h-5" />
+                Residents
+              </Link>
+
+              {/* Households */}
+              <Link href="/admin/households" className={linkClasses("/admin/households")}>
+                <Home className="w-5 h-5" />
+                Households
+              </Link>
+
+              {/* Profile */}
+              <Link href="/admin/profile" className={linkClasses("/admin/profile")}>
+                <User className="w-5 h-5" />
+                Profile
+              </Link>
+            </nav>
+
 
         {/* Footer (Logout button at the bottom) */}
         <div className="p-4 border-t border-gray-700">
